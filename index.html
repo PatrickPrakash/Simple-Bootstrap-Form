@@ -47,38 +47,42 @@
                     
                     <div class="form-group pb-2">
 
-                        <p>Severity of the <i class="fas fa-bug pb-2" style="color: orange;" ></i></p>
+                        <p class="mb-0 pb-2">Severity of the <i class="fas fa-bug pb-2 " style="color: orange;" ></i></p>
 
                         <div class="form-check">
                             <label for="bug-severity" class="form-check-label pb-2">Blocker (S1)</label>
-                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity">
+                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-blocker">
                         </div>
 
                         <div class="form-check ">
                             <label for="bug-severity" class="form-check-label pb-2">Critical (S2)</label>
-                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity">
+                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-critical">
                         </div>
 
                         <div class="form-check ">
                             <label for="bug-severity" class="form-check-label pb-2">Major (S3)</label>
-                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity">
+                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-major">
                         </div>
 
                         <div class="form-check ">
                             <label for="bug-severity" class="form-check-label pb-2">Minor (S4)</label>
-                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity">
+                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-minor">
                         </div>
                         
                         <div class="form-check ">
                             <label for="bug-severity" class="form-check-label pb-2">Low (S5)</label>
-                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity">
+                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-low">
                         </div>
                     </div>
 
+                    <div class="form-group pb-2">
+                        <label for="bug-screenshot" class="form-label">Attach the Screenshot (If available)</label>
+                        <input type="file" class="form-control" id="bug-screenshot">
+                    </div>
                     
                       <div class="form-group pb-2">
                         <label for="bug-report">Describe your <i class="fas fa-bug pb-2" style="color: orange;" ></i> </label>
-                        <textarea class="form-control" aria-label="With textarea"></textarea>
+                        <textarea class="form-control" style="min-height: calc(1.5em + (5rem + 2px))" aria-label="With textarea"></textarea>
                       </div>
     
                       <button type="submit" class="btn btn-warning">Submit</button>
