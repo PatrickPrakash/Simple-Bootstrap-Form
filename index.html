@@ -18,8 +18,15 @@
     <script src="https://kit.fontawesome.com/cd4f2f6156.js" crossorigin="anonymous"></script>
     <!-- End Font Awesome CDN -->
 
+    <!-- IntTelInput CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" integrity="sha512-gxWow8Mo6q6pLa1XH/CcH8JyiSDEtiwJV78E+D+QP0EVasFs8wKXq16G8CLD4CJ2SnonHr4Lm/yY2fSI2+cbmw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- End INTTelInput CDN -->
 
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.js" integrity="sha512-Re9cWc8hkn7aWsPHHlX+FusmIyrNeKQy17imsq9KxIPauDx1XGnBhJn7+ItWi7fwT35i+81pDJGQtolFwnUXZg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js" integrity="sha512-/b3Hz5C3/9PtjfdAtl9gQhYSkZirvbAOPTkcCT/9ABa4hpyQizp1DILcGZNrsmi1VvRBH3vImPNmaWtaf0IyHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script defer src="script.js"></script>
 
 </head>
 <body>
@@ -33,19 +40,25 @@
                 </span>
 
                 <form action="/" method="POST">
-                    <div class="form-group pb-2">
-                        <label for="issuer-name" class="pb-2">Name</label>
-                        <input type="text" class="form-control" name="issuer-name" id="issuer-name" placeholder="Enter your Name">
+                    <div class="input-group pb-4">
+                        <span class="input-group-text">Name</span>
+                        <input type="text" class="form-control" name="issuer-name" id="issuer-name" placeholder="Full Name" >
                     </div>
     
-                    <div class="form-group pb-2">
-                        <label for="issuer-email" class="pb-2">Email</label>
-                        <input type="email" class="form-control"  name="issuer-email" id="issuer-email" placeholder="Enter your Email">
-                        <small class=" form-text text-muted">We'll never share your email with anyone else.</small>
+                    <div class="input-group">
+                        
+                        <input type="email" class="form-control"  name="issuer-email" id="issuer-email" placeholder="Email">
+                        <span class="input-group-text">@foo.com</span>
                     </div>
 
+                    <small class=" form-text text-muted">We'll never share your email with anyone else.</small>
                     
-                    <div class="form-group pb-2">
+                    <div class="input-group pt-2">
+                        <span class="input-group-text">Phone</span>
+                        <input type="tel" name="issuer-phone"  id="issuer-phone" class="form-control" aria-label="Text input with dropdown button" >
+                      </div>
+
+                    <div class="form-group pt-2">
 
                         <p class="mb-0 pb-2">Severity of the <i class="fas fa-bug pb-2 " style="color: orange;" ></i></p>
 
@@ -76,14 +89,26 @@
                     </div>
 
                     <div class="form-group pb-2">
+                        <label for="bug-platform" class="form-label">Select the platform where <i class="fas fa-bug pb-2" style="color: orange;" ></i> showed up</label>
+                        <select class="form-select" name="bug-platform" aria-label="Select the platform">
+                            <option selected>Select the platform</option>
+                            <option value="1">Client Platform</option>
+                            <option value="2">Admin Platform</option>
+                            <option value="3">Server Side</option>
+                          </select>
+                    </div>
+
+                    <div class="form-group pb-2">
                         <label for="bug-screenshot" class="form-label">Attach the Screenshot (If available)</label>
-                        <input type="file" class="form-control" id="bug-screenshot">
+                        <input type="file" class="form-control" name="bug-screenshot" id="bug-screenshot">
                     </div>
                     
                       <div class="form-group pb-2">
                         <label for="bug-report">Describe your <i class="fas fa-bug pb-2" style="color: orange;" ></i> </label>
-                        <textarea class="form-control" style="min-height: calc(1.5em + (5rem + 2px))" aria-label="With textarea"></textarea>
+                        <textarea class="form-control" name="bug-report" style="min-height: calc(1.5em + (5rem + 2px))" aria-label="With textarea"></textarea>
                       </div>
+
+
     
                       <button type="submit" class="btn btn-warning">Submit</button>
                 </form>
