@@ -11,7 +11,7 @@ const issuer_email = document.querySelector('#issueremail');
 const issuer_confirm_email = document.querySelector('#issueremailconfirm');
 const issuer_phone = document.querySelector('#issuerphone');
 const issuer_phone_label = document.querySelector('#issuer-phone-label');
-const bugseverity_name = [...document.getElementsByName("bug-severity")].some(c => c.checked);
+const bugseverity_name = [...document.getElementsByName("bug-severity")]
 const bugseverity_label = document.querySelector('#bug-severity-label');
 const bugplatform = document.querySelector("#bug-platform");
 const bugscreenshot = document.querySelector('#bugscreenshot');
@@ -19,7 +19,7 @@ const bugreport = document.querySelector('#bug-report');
 
 const bugform = document.querySelector('#bugform');
 
-var isBugSeverity = false;
+// var isBugSeverity = false;
 
 //Utility Functions
 
@@ -37,12 +37,7 @@ const isPhoneValid = (phone) => {
 }
 
 const isFileExist = (file) => {
-    if (file.files[0].name) {
-        return true;
-    }
-    else {
-        return false;
-    }
+    return (file && file["files"] && (file["files"].length > 0) && file["files"][0].name) ? true : false;
 }
 
 const getFileName = (file) => {
@@ -178,16 +173,21 @@ function checkConfirmEmail() {
 // Manually select the small element using ID #issuer-phone-label
 
 function checkPhone() {
-    let valid;
-    if (!isPhoneValid(issuer_phone.value)) {
-        showErrorBorderLabel(issuer_phone_label, "The phone number is not valid");
-        showErrorBorderLabel(issuer_phone, "The phone number is not valid");
-        valid = false;
+    let valid = false;
+    if (isRequired(issuer_phone.value)) {
+        if (!isPhoneValid(issuer_phone.value)) {
+            showErrorBorderLabel(issuer_phone_label, "The phone number is not valid");
+            showErrorBorderLabel(issuer_phone, "The phone number is not valid");
+            valid = false;
+        }
+        else if (isPhoneValid(issuer_phone.value)) {
+            showSuccessBorderLabel(issuer_phone_label);
+            // showSuccessBorderLabel(issuer_phone);
+            valid = true;
+        }
     }
-    else if (isRequired(issuer_phone.value) && isPhoneValid(issuer_phone.value)) {
-        showSuccessBorderLabel(issuer_phone_label);
-        // showSuccessBorderLabel(issuer_phone);
-        valid = true;
+    else {
+        showErrorBorderLabel(issuer_phone_label, "Enter the phone number");
     }
 
     return valid;
@@ -195,14 +195,18 @@ function checkPhone() {
 
 // TODO: Validate the Severity of the BUG checkboxes
 // Anyone of the radio button must be selected 
-function checkBugSeverity(isSelected) {
-    let valid = false;
-    if (isSelected) {
-        valid = true;
-    }
-    else {
+function checkBugSeverity() {
+    let valid = true;
+    if (!bugseverity_name.some(c => c.checked)) {
+        console.log("Checked");
+        showErrorBorderLabel(bugseverity_label, "Please set anyone of the options");
         valid = false;
     }
+    else {
+        showSuccessBorderLabel(bugseverity_label);
+        valid = true;
+    }
+
     return valid;
 }
 
@@ -229,7 +233,7 @@ function checkBugPlatform() {
 // Check for null 
 
 function checkBugScreenshot() {
-    let valid = false;
+    let valid = true;
 
     if (isFileExist(bugscreenshot)) {
         const fileName = getFileName(bugscreenshot);
@@ -273,6 +277,13 @@ function checkBugReport() {
     return valid;
 }
 
+function checkAllConditions() {
+    checkName();
+    checkEmail();
+    checkConfirmEmail();
+    checkBug
+}
+
 
 bugform.addEventListener('submit', function (e) {
     //Action when form is submitted
@@ -282,6 +293,7 @@ bugform.addEventListener('submit', function (e) {
         isPhoneValid = checkPhone(),
         isBugPlatform = checkBugPlatform(),
         isBugScreenshot = checkBugScreenshot(),
+        isBugSeverity = checkBugSeverity(),
         isBugReport = checkBugReport();
 
     let isFormValid = isNameValid && isEmailValid && isConfirmEmailValid && isPhoneValid && isBugSeverity && isBugPlatform && isBugScreenshot && isBugReport;
@@ -314,10 +326,6 @@ const debounce = (fn, delay = 500) => {
 
 
 bugform.addEventListener('input', debounce(function (e) {
-
-    if (e.target.name == "bug-severity") {
-        isBugSeverity = true;
-    }
 
 
     switch (e.target.id) {
