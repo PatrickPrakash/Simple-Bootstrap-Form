@@ -49,6 +49,23 @@ const getFileName = (file) => {
     return file.files[0].name;
 }
 
+const countWords = (input) => {
+    const inputString = input.value;
+
+    //Intialise the counter
+    wordCounter = 0;
+
+    var splitWords = inputString.split(' ');
+
+    for (var i = 0; i < splitWords.length; i++) {
+        if (splitWords[i] != "") {
+            wordCounter += 1;
+        }
+    }
+
+    return wordCounter;
+}
+
 // Error Showing Functions
 
 const showErrorLabel = (input, message) => {
@@ -94,12 +111,16 @@ const showSuccessBorderLabel = (input) => {
 // TODO: Validate Name
 // The name cannot be a null value
 function checkName() {
+    let valid = false;
     if (isRequired(issuer_name.value)) {
         showSuccessBorderLabel(issuer_name);
+        valid = true;
     }
     else {
         showErrorBorderLabel(issuer_name, "Name must not be empty");
+        valid = false;
     }
+    return valid;
 }
 
 
@@ -109,31 +130,44 @@ function checkName() {
 
 function checkEmail() {
     if (!isRequired(issuer_email.value)) {
+        let valid = false;
         showErrorBorderLabel(issuer_email, "The email must not be empty");
+        valid = false;
     }
     else if (!isEmailValid(issuer_email.value)) {
         showErrorBorderLabel(issuer_email, "The Email you entered is not valid. It should be in the form abc@test.com");
+        valid = false;
     }
     else if (isEmailValid(issuer_email.value)) {
         showSuccessBorderLabel(issuer_email);
+        valid = true;
     }
 
+    return valid;
 }
 
 function checkConfirmEmail() {
+    let valid = false;
     if (!isRequired(issuer_confirm_email.value)) {
         showErrorBorderLabel(issuer_confirm_email, "The email must not be blank")
+        valid = false;
     }
     else if (!isEmailValid(issuer_confirm_email.value)) {
         showErrorBorderLabel(issuer_confirm_email, "The Email you entered is not valid. It should be in the form abc@test.com");
+        valid = false;
+
     }
     else if (isRequired(issuer_confirm_email.value) && isEmailValid(issuer_confirm_email.value) && (issuer_email.value == issuer_confirm_email.value)) {
         showSuccessBorderLabel(issuer_confirm_email);
+        valid = true;
+
     }
     else if (!(issuer_email.value == issuer_confirm_email.value)) {
         showErrorBorderLabel(issuer_confirm_email, "The Confirm Email doesn't match");
+        valid = false;
     }
 
+    return valid;
 }
 
 
@@ -142,29 +176,99 @@ function checkConfirmEmail() {
 // Manually select the small element using ID #issuer-phone-label
 
 function checkPhone() {
+    let valid;
     if (!isPhoneValid(issuer_phone.value)) {
         showErrorBorderLabel(issuer_phone_label, "The phone number is not valid");
         showErrorBorderLabel(issuer_phone, "The phone number is not valid");
+        valid = false;
     }
     else if (isRequired(issuer_phone.value) && isPhoneValid(issuer_phone.value)) {
         showSuccessBorderLabel(issuer_phone_label);
         showSuccessBorderLabel(issuer_phone);
+        valid = true;
     }
+
+    return valid;
 }
 
 // TODO: Validate the Severity of the BUG checkboxes
 // Anyone of the radio button must be selected 
+function checkBugSeverity(isSelected) {
+    let valid = false;
+    if (isSelected) {
+        valid = true;
+    }
+    else {
+        valid = false;
+    }
+    return valid;
+}
 
 // TODO: Validate the plaform dropdown menu
 // Any one of the value in the dropdown menu must be selected it cannot be null
+
+function checkBugPlatform() {
+    let valid = false;
+
+    if (isRequired(bugplatform) && !(bugplatform.value == 'Select the platform')) {
+        showSuccessBorderLabel(bugplatform);
+        valid = true;
+    }
+    else {
+        showErrorBorderLabel(bugplatform, "Select some option of above");
+        valid = false;
+    }
+
+    return valid
+}
 
 // TODO: Validate Choose File Section
 // Only Image files such as PNG, JPEG are accepted in the file upload section
 // Check for null 
 
+function checkBugScreenshot() {
+    let valid = false;
+
+    if (isFileExist(bugscreenshot)) {
+        const fileName = getFileName(bugscreenshot);
+
+        if (fileName.match(/.(jpg|jpeg|png)$/i)) {
+            valid = true;
+            showSuccessBorderLabel(bugscreenshot);
+        }
+        else {
+            showErrorBorderLabel(bugscreenshot, "Add the png or jpeg");
+            valid = false;
+        }
+
+    }
+    else {
+        showErrorBorderLabel(bugscreenshot, "Add the screenshot");
+        valid = false;
+    }
+
+
+    return valid;
+}
+
 //TODO: Validate BUG Description
 // The description should be above 20 words and maximum upto 150 words
 
+function checkBugReport() {
+    let valid = false;
+    if (isBetween(countWords(bugreport), 20, 150)) {
+        showSuccessBorderLabel(bugreport);
+        valid = true;
+    }
+    else if (!isRequired(bugreport.value)) {
+        showErrorBorderLabel(bugreport, "The report is empty");
+        valid = false;
+    }
+    else {
+        showErrorBorderLabel(bugreport, "The report must contain minimum 20 words upto maximum 150 words");
+        valid = false;
+    }
+}
 
 
 bugform.addEventListener('submit', function (e) {
@@ -210,7 +314,7 @@ const debounce = (fn, delay = 500) => {
 bugform.addEventListener('input', debounce(function (e) {
 
     if (e.target.name == "bug-severity") {
-        console.log('bug severity');
+        checkBugSeverity(true);
     }
 
 
@@ -229,15 +333,15 @@ bugform.addEventListener('input', debounce(function (e) {
             break;
 
         case 'bug-platform':
-            // checkBugPlatform();
+            checkBugPlatform();
             break;
 
         case 'bugscreenshot':
-            // checkBugScreenshot();
+            checkBugScreenshot();
             break;
 
         case 'bug-report':
-            // checkBugReport();
+            checkBugReport();
             break;
     }
 
