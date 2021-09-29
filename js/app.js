@@ -266,12 +266,6 @@ function checkBugReport() {
     return valid;
 }
 
-function checkAllConditions() {
-    checkName();
-    checkEmail();
-    checkConfirmEmail();
-    checkBug
-}
 
 
 bugform.addEventListener('submit', function (e) {
