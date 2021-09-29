@@ -85,10 +85,13 @@ const showErrorBorderLabel = (input, message) => {
 
     input.classList.remove('border-success');
     input.classList.add('border-danger');
-
     const error = formField.querySelector('small');
-    error.classList.add('text-danger');
-    error.textContent = message;
+
+    if (error) {
+        error.classList.add('text-danger');
+        error.textContent = message;
+    }
+
 }
 
 
@@ -176,18 +179,17 @@ function checkPhone() {
     let valid = false;
     if (isRequired(issuer_phone.value)) {
         if (!isPhoneValid(issuer_phone.value)) {
-            showErrorBorderLabel(issuer_phone_label, "The phone number is not valid");
             showErrorBorderLabel(issuer_phone, "The phone number is not valid");
             valid = false;
         }
         else if (isPhoneValid(issuer_phone.value)) {
             showSuccessBorderLabel(issuer_phone_label);
-            // showSuccessBorderLabel(issuer_phone);
+            showSuccessBorderLabel(issuer_phone);
             valid = true;
         }
     }
     else {
-        showErrorBorderLabel(issuer_phone_label, "Enter the phone number");
+        showErrorBorderLabel(issuer_phone, "Enter the phone number");
     }
 
     return valid;
@@ -198,7 +200,6 @@ function checkPhone() {
 function checkBugSeverity() {
     let valid = true;
     if (!bugseverity_name.some(c => c.checked)) {
-        console.log("Checked");
         showErrorBorderLabel(bugseverity_label, "Please set anyone of the options");
         valid = false;
     }
