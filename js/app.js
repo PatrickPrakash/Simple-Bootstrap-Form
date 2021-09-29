@@ -19,6 +19,7 @@ const bugreport = document.querySelector('#bug-report');
 
 const bugform = document.querySelector('#bugform');
 
+var isBugSeverity = false;
 
 //Utility Functions
 
@@ -129,8 +130,9 @@ function checkName() {
 // confirm the two input email fields
 
 function checkEmail() {
+    let valid = false;
     if (!isRequired(issuer_email.value)) {
-        let valid = false;
+
         showErrorBorderLabel(issuer_email, "The email must not be empty");
         valid = false;
     }
@@ -184,7 +186,7 @@ function checkPhone() {
     }
     else if (isRequired(issuer_phone.value) && isPhoneValid(issuer_phone.value)) {
         showSuccessBorderLabel(issuer_phone_label);
-        showSuccessBorderLabel(issuer_phone);
+        // showSuccessBorderLabel(issuer_phone);
         valid = true;
     }
 
@@ -268,6 +270,7 @@ function checkBugReport() {
         showErrorBorderLabel(bugreport, "The report must contain minimum 20 words upto maximum 150 words");
         valid = false;
     }
+    return valid;
 }
 
 
@@ -277,7 +280,6 @@ bugform.addEventListener('submit', function (e) {
         isEmailValid = checkEmail(),
         isConfirmEmailValid = checkConfirmEmail(),
         isPhoneValid = checkPhone(),
-        isBugSeverity = checkBugSeverity(),
         isBugPlatform = checkBugPlatform(),
         isBugScreenshot = checkBugScreenshot(),
         isBugReport = checkBugReport();
@@ -314,7 +316,7 @@ const debounce = (fn, delay = 500) => {
 bugform.addEventListener('input', debounce(function (e) {
 
     if (e.target.name == "bug-severity") {
-        checkBugSeverity(true);
+        isBugSeverity = true;
     }
 
 
