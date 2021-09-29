@@ -19,8 +19,6 @@ const bugreport = document.querySelector('#bug-report');
 
 const bugform = document.querySelector('#bugform');
 
-// var isBugSeverity = false;
-
 //Utility Functions
 
 const isRequired = value => value == '' ? false : true;
@@ -107,8 +105,7 @@ const showSuccessBorderLabel = (input) => {
 }
 
 
-// TODO: Validate Name
-// The name cannot be a null value
+
 function checkName() {
     let valid = false;
     if (isRequired(issuer_name.value)) {
@@ -123,9 +120,7 @@ function checkName() {
 }
 
 
-// TODO: Validate Email
-// check for a valid email by checking the "@" tag
-// confirm the two input email fields
+
 
 function checkEmail() {
     let valid = false;
@@ -171,9 +166,7 @@ function checkConfirmEmail() {
 }
 
 
-// TODO: Validate the Phone Number
-// Check if the phone number has 10 digits without any extra country code such as +
-// Manually select the small element using ID #issuer-phone-label
+
 
 function checkPhone() {
     let valid = false;
@@ -195,8 +188,7 @@ function checkPhone() {
     return valid;
 }
 
-// TODO: Validate the Severity of the BUG checkboxes
-// Anyone of the radio button must be selected 
+
 function checkBugSeverity() {
     let valid = true;
     if (!bugseverity_name.some(c => c.checked)) {
@@ -211,8 +203,7 @@ function checkBugSeverity() {
     return valid;
 }
 
-// TODO: Validate the plaform dropdown menu
-// Any one of the value in the dropdown menu must be selected it cannot be null
+
 
 function checkBugPlatform() {
     let valid = false;
@@ -229,9 +220,7 @@ function checkBugPlatform() {
     return valid
 }
 
-// TODO: Validate Choose File Section
-// Only Image files such as PNG, JPEG are accepted in the file upload section
-// Check for null 
+
 
 function checkBugScreenshot() {
     let valid = true;
@@ -258,8 +247,7 @@ function checkBugScreenshot() {
     return valid;
 }
 
-//TODO: Validate BUG Description
-// The description should be above 20 words and maximum upto 150 words
+
 
 function checkBugReport() {
     let valid = false;
