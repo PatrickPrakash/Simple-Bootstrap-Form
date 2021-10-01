@@ -32,6 +32,7 @@ const isEmailValid = (email) => {
 
 const isPhoneValid = (phone) => {
     return phone.match(/\d/g).length === 10;
+
 }
 
 const isFileExist = (file) => {
@@ -179,17 +180,20 @@ function checkPhone() {
     let valid = false;
     if (isRequired(issuer_phone.value)) {
         if (!isPhoneValid(issuer_phone.value)) {
-            showErrorBorderLabel(issuer_phone, "The phone number is not valid");
+            showErrorBorderLabel(issuer_phone)
+            showErrorBorderLabel(issuer_phone_label, "The phone number is not valid");
             valid = false;
         }
         else if (isPhoneValid(issuer_phone.value)) {
-            showSuccessBorderLabel(issuer_phone_label);
             showSuccessBorderLabel(issuer_phone);
+            showSuccessBorderLabel(issuer_phone_label);
             valid = true;
         }
     }
     else {
-        showErrorBorderLabel(issuer_phone, "Enter the phone number");
+        showErrorBorderLabel(issuer_phone);
+        showErrorBorderLabel(issuer_phone_label, "Enter the phone number");
+        valid = false;
     }
 
     return valid;
@@ -198,7 +202,7 @@ function checkPhone() {
 
 function checkBugSeverity() {
     let valid = false;
-    if (!bugseverity_name.some(c => c.checked)) {
+    if (!(bugseverity_name.some(c => c.checked))) {
         showErrorBorderLabel(bugseverity_label, "Please set anyone of the options");
         valid = false;
     }
@@ -340,6 +344,10 @@ const debounce = (fn, delay = 500) => {
 
 
 bugform.addEventListener('input', debounce(function (e) {
+
+    if (e.target.name == 'bug-severity') {
+        checkBugSeverity();
+    }
 
 
     switch (e.target.id) {
