@@ -299,6 +299,7 @@ bugform.addEventListener('submit', function (e) {
         var newform = document.querySelector('#bugform');
         var formdata = new FormData(newform);
         try {
+
             appScriptPost(formdata);
 
         }
@@ -306,20 +307,14 @@ bugform.addEventListener('submit', function (e) {
             console.log("Error in the submission");
         }
     }
-
-    const newfo = document.querySelector('#bugform');
-    const formdatas = new FormData(newfo);
-    console.log(formdatas);
-
-
     //Prevent Form from reloading
     //e.preventDefault();
 });
 
 function appScriptPost(formdata) {
 
-    // const scriptURL = 'https://script.google.com/macros/s/AKfycbxQeatsVtWnhbzv8nl-OKE1XKu51p9ORNiD3nlxpXDpbJ_ObdSTRfwdoB8shE2oixoN/exec';
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzD7Nx7uocobLBw-vEAVehFt_wt340HfvrMoiDHyQwVvET2wqePL8FayEask7z0J3o/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxQeatsVtWnhbzv8nl-OKE1XKu51p9ORNiD3nlxpXDpbJ_ObdSTRfwdoB8shE2oixoN/exec';
+    //const scriptURL = 'https://script.google.com/macros/s/AKfycbzD7Nx7uocobLBw-vEAVehFt_wt340HfvrMoiDHyQwVvET2wqePL8FayEask7z0J3o/exec';
     fetch(scriptURL, { method: 'POST', body: formdata })
         .then(response => console.log('Success!', response))
         .catch(error => console.error('Error!', error.message))
