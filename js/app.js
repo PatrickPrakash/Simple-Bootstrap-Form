@@ -313,7 +313,7 @@ bugform.addEventListener('submit', function (e) {
 
 
     //Prevent Form from reloading
-    e.preventDefault();
+    //e.preventDefault();
 });
 
 function appScriptPost(formdata) {
