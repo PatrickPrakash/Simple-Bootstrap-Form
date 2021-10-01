@@ -319,7 +319,7 @@ bugform.addEventListener('submit', function (e) {
 function appScriptPost(formdata) {
 
     // const scriptURL = 'https://script.google.com/macros/s/AKfycbxQeatsVtWnhbzv8nl-OKE1XKu51p9ORNiD3nlxpXDpbJ_ObdSTRfwdoB8shE2oixoN/exec';
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzh1xobJyQc5pMaBEYjBvQD4PmGoTOYdbhYhXZxp7w4RGNHB-LUuHIyH8qBslO89GSV/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzD7Nx7uocobLBw-vEAVehFt_wt340HfvrMoiDHyQwVvET2wqePL8FayEask7z0J3o/exec';
     fetch(scriptURL, { method: 'POST', body: formdata })
         .then(response => console.log('Success!', response))
         .catch(error => console.error('Error!', error.message))
