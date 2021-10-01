@@ -64,18 +64,22 @@ const countWords = (input) => {
 
 const showErrorLabel = (input, message) => {
     const formField = input.parentElement;
-
     const error = formField.querySelector('small');
-    error.classList.add('text-danger');
-    error.textContent = message;
+    if (error) {
+        error.classList.add('text-danger');
+        error.textContent = message;
+    }
+
 }
 
 const showSuccessLabel = (input, message) => {
     const formField = input.parentElement;
-
     const error = formField.querySelector('small');
-    error.classList.add('text-success');
-    error.textContent = message;
+    if (error) {
+        error.classList.add('text-success');
+        error.textContent = message;
+    }
+
 }
 
 const showErrorBorderLabel = (input, message) => {
@@ -100,8 +104,11 @@ const showSuccessBorderLabel = (input) => {
     input.classList.add('border-success');
 
     const error = formField.querySelector('small');
-    error.classList.add('text-success')
-    error.textContent = '';
+    if (error) {
+        error.classList.add('text-success')
+        error.textContent = '';
+    }
+
 }
 
 
@@ -266,6 +273,12 @@ function checkBugReport() {
     return valid;
 }
 
+function closeIt(e) {
+    console.log(e);
+    google.script.host.close();
+};
+
+
 
 
 bugform.addEventListener('submit', function (e) {
@@ -283,12 +296,35 @@ bugform.addEventListener('submit', function (e) {
 
     if (isFormValid) {
         console.log("Form is valid- It passed all the conditions");
+        var newform = document.querySelector('#bugform');
+        var formdata = new FormData(newform);
+        try {
+            appScriptPost(formdata);
+
+        }
+        catch {
+            console.log("Error in the submission");
+        }
     }
+
+    const newfo = document.querySelector('#bugform');
+    const formdatas = new FormData(newfo);
+    console.log(formdatas);
+
 
     //Prevent Form from reloading
     e.preventDefault();
 });
 
+function appScriptPost(formdata) {
+
+    // const scriptURL = 'https://script.google.com/macros/s/AKfycbxQeatsVtWnhbzv8nl-OKE1XKu51p9ORNiD3nlxpXDpbJ_ObdSTRfwdoB8shE2oixoN/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzh1xobJyQc5pMaBEYjBvQD4PmGoTOYdbhYhXZxp7w4RGNHB-LUuHIyH8qBslO89GSV/exec';
+    fetch(scriptURL, { method: 'POST', body: formdata })
+        .then(response => console.log('Success!', response))
+        .catch(error => console.error('Error!', error.message))
+
+}
 
 
 //Timer for checking the executing the function repeatedly

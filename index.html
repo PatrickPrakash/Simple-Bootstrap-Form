@@ -37,7 +37,7 @@
                     <i class="fas fa-bug  align-items-baseline ps-2 pt-1" style="color: orange; font-size: 1.5em;"></i>
                 </span>
 
-                <form action="/" method="POST" id="bugform">
+                <form action="/" method="POST" id="bugform" name="bug-form">
                     <div class="input-group pb-4" >
                         <span class="input-group-text">Name</span>
                         <input type="text" class="form-control border"  name="issuername" id="issuername" placeholder="Enter your Name" >
@@ -71,27 +71,27 @@
 
                         <div class="form-check">
                             <label for="bug-severity" class="form-check-label pb-2">Blocker (S1)</label>
-                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-blocker">
+                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-blocker" value="blocker">
                         </div>
 
                         <div class="form-check">
                             <label for="bug-severity" class="form-check-label pb-2">Critical (S2)</label>
-                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-critical">
+                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-critical" value="critical">
                         </div>
 
                         <div class="form-check">
                             <label for="bug-severity" class="form-check-label pb-2">Major (S3)</label>
-                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-major">
+                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-major" value="major">
                         </div>
 
                         <div class="form-check ">
                             <label for="bug-severity" class="form-check-label pb-2">Minor (S4)</label>
-                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-minor">
+                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-minor" value="minor">
                         </div>
                         
                         <div class="form-check ">
                             <label for="bug-severity" class="form-check-label pb-2">Low (S5)</label>
-                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-low">
+                            <input type="radio" class="form-check-input" name="bug-severity" id="bug-severity-low" value="low">
                         </div>
                         <small class="col-12 d-flex"></small>
                     </div>
@@ -131,6 +131,13 @@
             </div>
         </div>
     </div>
+
+
+    
+       
+
+
+
     
     
 
@@ -146,3 +153,5 @@
 
 </body>
 </html>
+
+
