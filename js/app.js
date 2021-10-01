@@ -197,7 +197,7 @@ function checkPhone() {
 
 
 function checkBugSeverity() {
-    let valid = true;
+    let valid = false;
     if (!bugseverity_name.some(c => c.checked)) {
         showErrorBorderLabel(bugseverity_label, "Please set anyone of the options");
         valid = false;
