@@ -332,7 +332,10 @@ function appScriptPost() {
         const qs = new URLSearchParams({ filename: bugform.bugscreenshot.value, name: issuer_name.value, email: issuer_email.value, phone: issuer_phone.value, severity: severity_value, platform: bugplatform.value, report: bugreport.value });
 
         fetch(`${url}?${qs}`, { method: "POST", body: JSON.stringify([...new Int8Array(f.target.result)]) })
-            .then(res => res.json())
+            .then(res => {
+                res.json()
+                location.assign('/form.html');
+            })
             .then(e => console.log(e))
             .catch(err => console.log(err));
 
