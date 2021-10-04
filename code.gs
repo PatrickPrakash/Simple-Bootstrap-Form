@@ -5,7 +5,7 @@ function doPost(e) {
   lock.tryLock(10000)
 
   try {
-  
+
   var sheet = SpreadsheetApp.getActiveSheet();
   const folderId = "1l93c7deOcqPLSPqM2CHgzWPrprCF2V_i";  // FolderID where the files are stored
 
@@ -19,7 +19,7 @@ function doPost(e) {
 
   // Values fetched and appended into a arrray to insert
     var values = [
-  [ e.parameter.name, e.parameter.email,e.parameter.phone ,file.getUrl(), e.parameter.severity, e.parameter.platform, e.parameter.report ] 
+  [ e.parameter.name, e.parameter.email,e.parameter.phone ,file.getUrl(), e.parameter.severity, e.parameter.platform, e.parameter.report ]
   ];
 
   // Gets the range of the next row in the sheets and set the values
@@ -40,6 +40,6 @@ function doPost(e) {
     lock.releaseLock()
   }
 
- 
+
 
 }
