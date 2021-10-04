@@ -1,7 +1,9 @@
 # Simple-Bug-Report-Bootstrap-Form
+
 A simple bug-reporting form using bootstrap 5
 
 ## Google Sheets Link
+
 You can view the data in the sheets
 
       https://docs.google.com/spreadsheets/d/1GDAMU1j9jJ20h6GLRjeLYTF3mMds0L0kU8WpzMUYGiA/edit?usp=sharing
