@@ -44,6 +44,10 @@ const getFileName = (file) => {
     return file.files[0].name;
 }
 
+const getFileData = (file) => {
+    return file.files[0]
+}
+
 const countWords = (input) => {
     const inputString = input.value;
 
@@ -300,12 +304,10 @@ bugform.addEventListener('submit', function (e) {
 
     if (isFormValid) {
         console.log("Form is valid- It passed all the conditions");
-        var newform = document.querySelector('#bugform');
-        var formdata = new FormData(newform);
+
         try {
-
-            appScriptPost(formdata);
-
+            appScriptPost();
+            console.log("Submitted the data")
         }
         catch {
             console.log("Error in the submission");
@@ -315,18 +317,27 @@ bugform.addEventListener('submit', function (e) {
     e.preventDefault();
 });
 
-function appScriptPost(formdata) {
+function appScriptPost() {
 
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxQeatsVtWnhbzv8nl-OKE1XKu51p9ORNiD3nlxpXDpbJ_ObdSTRfwdoB8shE2oixoN/exec';
-    // Dev Script
-    //const scriptURL = 'https://script.google.com/macros/s/AKfycbzD7Nx7uocobLBw-vEAVehFt_wt340HfvrMoiDHyQwVvET2wqePL8FayEask7z0J3o/exec'; 
-    fetch(scriptURL, { method: 'POST', body: formdata })
-        .then(response => {
-            console.log('Success!', response);
-            location.assign('/form.html');
-        })
-        .catch(error => console.error('Error!', error.message))
+    var severity_radios = document.querySelectorAll('input[type="radio"]:checked');
+    var severity_value = severity_radios.length > 0 ? severity_radios[0].value : null;
 
+    const fr = new FileReader();
+    const file = bugform.bugscreenshot.files[0];
+    fr.readAsArrayBuffer(file);
+    fr.onload = f => {
+
+        const url = "https://script.google.com/macros/s/AKfycbxBt--Lp313SLTjZ-MG8Pn1B151psP8YlufsF-yA-6g0_wK_hM2silbe3Y9ddTvIH1k/exec";
+
+        const qs = new URLSearchParams({ filename: bugform.bugscreenshot.value, name: issuer_name.value, email: issuer_email.value, phone: issuer_phone.value, severity: severity_value, platform: bugplatform.value, report: bugreport.value });
+
+        fetch(`${url}?${qs}`, { method: "POST", body: JSON.stringify([...new Int8Array(f.target.result)]) })
+            .then(res => res.json())
+            .then(e => console.log(e))
+            .catch(err => console.log(err));
+
+        console.log("URL Form" + qs); // Prints the URLParams
+    }
 }
 
 
@@ -358,12 +369,15 @@ bugform.addEventListener('input', debounce(function (e) {
         case 'issuername':
             checkName();
             break;
+
         case 'issueremail':
             checkEmail();
             break;
+
         case 'issueremailconfirm':
             checkConfirmEmail();
             break;
+
         case 'issuerphone':
             checkPhone();
             break;
